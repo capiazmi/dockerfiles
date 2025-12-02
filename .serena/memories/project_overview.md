@@ -1,0 +1,7 @@
+# Project Overview
+- Purpose: Build and publish a Debian-based Docker image for Invoice Ninja with PHP-FPM, NGINX support, Chrome/Chromium for PDF generation, Redis, and MySQL, plus an init workflow to bootstrap the app.
+- Stack: Docker/Docker Compose; PHP 8.4 FPM with extensions (bcmath, gd, mbstring, pdo_mysql, zip, opcache, plus optional exif/imagick/intl/pcntl/saxon/soap); NGINX reverse proxy; MySQL 8; Redis; Supervisor; Chrome/Chromium via apt; Debian base.
+- Entry/boot: Dockerfile builds app layer from released invoiceninja tarball, links public index, and uses `scripts/init.sh` as entrypoint to prepare storage/public, set permissions, optionally migrate/seed and create initial user in production, then run supervisord.
+- Compose topology: services `app` (builds this image), `nginx` (serves public), `mysql`, `redis`; shared volumes `app_public`, `app_storage`, `mysql_data`, `redis_data`.
+- Config/structure: `debian/docker-compose.yml`, `debian/Dockerfile`, `debian/.env` sample; configs in `debian/nginx/*.conf`, `debian/php/php.ini` and `php-fpm.conf`, `debian/supervisor/supervisord.conf`; init script in `debian/scripts/init.sh`.
+- Repo root: metadata (.editorconfig, LICENSE, README with setup instructions and env variables), CODE_OF_CONDUCT, .gitignore.
