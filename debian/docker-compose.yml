@@ -32,7 +32,5 @@ volumes:
     driver: local
   app_storage:
     driver: local  
-  # mysql_data:
-  #   driver: local
   redis_data:
     driver: local
